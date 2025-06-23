@@ -1,0 +1,14 @@
+# Fetch id where current temperate is higher than previous temperature
+
+WITH base AS
+	(
+	SELECT
+		 w.id
+		,w.recordDate
+		,w.temperature AS current
+		,LAG(w.temperature) OVER (ORDER BY w.recordDate) as previous
+	FROM Weather w
+	)
+SELECT id 
+FROM base
+WHERE current > previous;
